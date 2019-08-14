@@ -20,12 +20,14 @@ def extraer_hora():
     return sentence
 
 def intent_received(hermes, intent_message):
-    mensaje = extraer_hora()
+    
     
     if intent_message.intent.intent_name == 'gemalb:NowTime':
+        mensaje = extraer_hora()
         hermes.publish_end_session(intent_message.session_id, mensaje)               
     else:
-        return
+        mensaje = 'Te lo digo mañana'
+        hermes.publish_end_session(intent_message.session_id, mensaje) 
     
 with Hermes(MQTT_ADDR) as h:
     h.subscribe_intents(intent_received).start()
