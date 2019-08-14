@@ -12,6 +12,7 @@ MQTT_ADDR = "{}:{}".format(MQTT_IP_ADDR, str(MQTT_PORT))
 
 def extraer_hora():
     now = datetime.now(timezone('Europe/Madrid'))
+    print("Hora actual {0}".format(now))
     if now.hour == 1:
         sentence = 'Es la una ' + " " + "{0}".format(str(now.minute))
     else:
@@ -21,11 +22,12 @@ def extraer_hora():
     return sentence
 
 def intent_received(hermes, intent_message):
+    print("Intent recibido {0}".format(intent_message.intent.intent_name))
     if intent_message.intent.intent_name == 'gemalb:NowTime':
         mensaje = extraer_hora()
-        hermes.publish_end_session(intent_message.session_id, mensaje)               
     else:
-        return
+        mensaje = 'Ahora no lo se'
+    hermes.publish_end_session(intent_message.session_id, mensaje)
     
 with Hermes(MQTT_ADDR) as h:
     h.subscribe_intents(intent_received).start()
