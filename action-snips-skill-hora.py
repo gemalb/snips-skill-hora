@@ -14,20 +14,17 @@ def extraer_hora():
     if now.hour == 1:
         sentence = 'Es la una ' + " " + "{0}".format(str(now.minute))
     else:
-        sentence = 'Son las ' + " " + "{0}".format(str(now.minute))
+        sentence = 'Son las ' + "{0}".format(str(now.hour)) + " " + "{0}".format(str(now.minute))
 
     sentence = sentence.strip()
     return sentence
 
 def intent_received(hermes, intent_message):
-    
-    
     if intent_message.intent.intent_name == 'gemalb:NowTime':
         mensaje = extraer_hora()
         hermes.publish_end_session(intent_message.session_id, mensaje)               
     else:
-        mensaje = 'Te lo digo mañana'
-        hermes.publish_end_session(intent_message.session_id, mensaje) 
+        return
     
 with Hermes(MQTT_ADDR) as h:
     h.subscribe_intents(intent_received).start()
