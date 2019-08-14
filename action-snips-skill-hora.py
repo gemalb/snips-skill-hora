@@ -3,6 +3,7 @@ from hermes_python.hermes import Hermes
 import requests
 
 from datetime import datetime
+from pytz import timezone
 
 MQTT_IP_ADDR = "localhost" 
 MQTT_PORT = 1883 
@@ -10,7 +11,7 @@ MQTT_ADDR = "{}:{}".format(MQTT_IP_ADDR, str(MQTT_PORT))
 
 
 def extraer_hora():
-    now = datetime.now()
+    now = datetime.now(timezone('Europe/Madrid'))
     if now.hour == 1:
         sentence = 'Es la una ' + " " + "{0}".format(str(now.minute))
     else:
