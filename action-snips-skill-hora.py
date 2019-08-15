@@ -23,10 +23,10 @@ def extraer_hora():
 
 def intent_received(hermes, intent_message):
     print("Intent recibido {0}".format(intent_message.intent.intent_name))
-    if intent_message.intent.intent_name == 'gemalb:NowTime':
+    if intent_message.intent.intent_name == 'gemalb:GetTime':
         mensaje = extraer_hora()
     else:
-        mensaje = 'Ahora no lo se'
+        return
     hermes.publish_end_session(intent_message.session_id, mensaje)
     
 with Hermes(MQTT_ADDR) as h:
