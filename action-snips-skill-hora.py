@@ -14,7 +14,12 @@ def extraer_hora():
     now = datetime.now(timezone('Europe/Madrid'))
     print("Hora actual {0}".format(now))
     if now.hour == 1:
-        sentence = 'Es la una ' + " " + "{0}".format(str(now.minute))
+        if now.minute == 0:
+            sentence = 'Es la una'
+        else:
+            sentence = 'Es la una ' + " " + "{0}".format(str(now.minute))
+    elif now.minute == 0:
+        sentence = 'Son las ' + "{0}".format(str(now.hour))
     else:
         sentence = 'Son las ' + "{0}".format(str(now.hour)) + " " + "{0}".format(str(now.minute))
 
